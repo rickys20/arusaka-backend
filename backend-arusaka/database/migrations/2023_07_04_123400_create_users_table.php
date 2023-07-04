@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->enum('role', ['USER', 'ADMIN', 'SUPERADMIN'])->nullable();
+            $table->enum('role', ['USER', 'ADMIN', 'SUPERADMIN'])->default('USER');
             $table->string('mobile_phone')->nullable();
             $table->text('address')->nullable();
-            $table->string('email')->nullable();
-            $table->string('password')->nullable();
-            $table->string('name')->nullable();
+            $table->string('email');
+            $table->string('password');
+            $table->string('name');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
