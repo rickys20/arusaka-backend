@@ -75,4 +75,56 @@ class CategoriesController extends Controller
         Storage::delete($path);
         return $result;
     }
+
+    public function getDetailCategory(Request $request, $slug)
+    {
+        $topic = Categories::where('slug', $slug)->first();
+
+        if (!$topic) {
+            return response()->json([
+                'message' => 'Topic not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $topic,
+        ], 200);
+    }
+
+    public function editCategory(Request $request, $slug)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $category = Categories::where('slug', $slug)->first();
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->save();
+
+        return response()->json([
+            'message' => 'Category Updated successfully',
+            'data' => $category,
+        ], 201);
+    }
+
+    public function deleteCategory(Request $request, $slug)
+    {
+        $category = Categories::where('slug', $slug)->first();
+        if(!$category){
+            return response()->json([
+                'message' => 'Category not found'
+            ], 400);
+        }
+        $category->delete();
+
+        return response()->json([
+            'message' => 'category deleted successfully'
+        ]);
+    }
 }
