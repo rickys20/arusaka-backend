@@ -35,6 +35,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::prefix('categories')->group(function () {
             Route::post('', [CategoriesController::class, 'store']);
+            Route::get('{category}', [CategoriesController::class, 'getDetailCategory']);
+            Route::put('{category}', [CategoriesController::class, 'editCategory']);
+            Route::delete('{category}', [CategoriesController::class, 'deleteCategory']);
         });
     });
 });
