@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\PartnerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
@@ -26,18 +27,29 @@ Route::get('test', function () {
 Route::prefix('auth')->group(function () {
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
-    Route::get('categories', [CategoriesController::class, 'getAll']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile']);
     Route::get('logout', [UserController::class, 'logout']);
     Route::middleware('admin')->prefix('admin')->group(function () {
+
         Route::prefix('categories')->group(function () {
+            Route::get('', [CategoriesController::class, 'getAll']);
             Route::post('', [CategoriesController::class, 'store']);
             Route::get('{category}', [CategoriesController::class, 'getDetailCategory']);
             Route::put('{category}', [CategoriesController::class, 'editCategory']);
             Route::delete('{category}', [CategoriesController::class, 'deleteCategory']);
         });
+
     });
+
+    Route::prefix('partners')->group(function () {
+        Route::get('', [PartnerController::class, 'getAll']);
+        Route::post('', [PartnerController::class, 'store']);
+        Route::get('{partner}', [PartnerController::class, 'getDetailPartner']);
+        Route::put('{partner}', [PartnerController::class, 'editPartner']);
+        Route::delete('{partner}', [PartnerController::class, 'deletePartner']);
+    });
+
 });
