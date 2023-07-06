@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\MaterialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
@@ -50,6 +52,22 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('{partner}', [PartnerController::class, 'getDetailPartner']);
         Route::put('{partner}', [PartnerController::class, 'editPartner']);
         Route::delete('{partner}', [PartnerController::class, 'deletePartner']);
+    });
+
+    Route::prefix('materials')->group(function () {
+        Route::get('', [MaterialController::class, 'getAll']);
+        Route::post('', [MaterialController::class, 'store']);
+        Route::get('{material}', [MaterialController::class, 'getDetailMaterial']);
+        Route::put('{material}', [MaterialController::class, 'update']);
+        Route::delete('{material}', [MaterialController::class, 'delete']);
+    });
+
+    Route::prefix('courses')->group(function () {
+        Route::get('', [CourseController::class, 'getAll']);
+        Route::post('', [CourseController::class, 'store']);
+        Route::get('{course}', [CourseController::class, 'getDetailCourse']);
+        Route::put('{course}', [CourseController::class, 'update']);
+        Route::delete('{course}', [CourseController::class, 'destroy']);
     });
 
 });
