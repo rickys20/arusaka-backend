@@ -27,7 +27,7 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class, 'ratings', 'courses_id', 'users_id')
                     ->as('ratings')
-                    ->withPivot('rating, comment');
+                    ->withPivot('rating', 'comment');
     }
 
     public function materials(): HasMany

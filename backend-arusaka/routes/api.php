@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\RatingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
@@ -70,4 +71,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('{course}', [CourseController::class, 'destroy']);
     });
 
+    Route::prefix('ratings')->group(function () {
+        Route::post('{course_slug}', [RatingController::class, 'store']);
+        Route::get('{course_slug}', [RatingController::class, 'getAll']);
+        Route::delete('{course_slug}', [RatingController::class, 'delete']);
+    });
 });

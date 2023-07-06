@@ -48,7 +48,7 @@ class user extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'ratings', 'users_id', 'courses_id')
                     ->as('ratings')
-                    ->withPivot('rating, comment');
+                    ->withPivot('rating', 'comment');
     }
 
     public function courses2(): BelongsToMany
