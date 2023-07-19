@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('reference_number')->nullable();
             $table->integer('price')->nullable();
             $table->string('unique_code')->nullable()->unique('unique_code_UNIQUE');
-            $table->enum('status', ['FINISHED', 'PROGRESS', 'EXPIRED'])->nullable();
+            $table->enum('status', ['FINISHED', 'PROGRESS', 'EXPIRED'])->default('PROGRESS');
         });
     }
 
