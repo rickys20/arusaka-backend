@@ -10,9 +10,12 @@ class Payment extends Model
     use HasFactory;
     protected $table = 'payments';
     protected $fillable = [
-        'reference_number',
+        'order_id',
+        'transaction_id',
         'price',
-        'unique_code',
+        'payment_type',
+        'expiry_time',
+        'url',
         'status'
     ];
     public $timestamps = false;

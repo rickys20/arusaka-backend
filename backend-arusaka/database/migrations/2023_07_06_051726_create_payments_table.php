@@ -15,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->bigInteger('reference_number')->nullable();
+            $table->string('order_id')->nullable()->unique('order_id_UNIQUE');
+            $table->string('transaction_id')->nullable();
             $table->integer('price')->nullable();
-            $table->string('unique_code')->nullable()->unique('unique_code_UNIQUE');
-            $table->enum('status', ['FINISHED', 'PROGRESS', 'EXPIRED'])->default('PROGRESS');
+            $table->string('payment_type')->nullable();
+            $table->timestamp('expiry_time')->nullable();
+            $table->string('url')->nullable();
+            $table->enum('status', ['authorize', 'capture', 'settlement', 'deny', 'pending', 'cancel', 'refund', 'partial_refund', 'chargeback', 'partial_chargeback', 'expire', 'failure'])->default('pending');
         });
     }
 

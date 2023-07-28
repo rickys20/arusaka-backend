@@ -33,6 +33,7 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
 });
+Route::post('webhook', [CourseOrderController::class, 'webhook']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile']);
@@ -77,6 +78,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('{course}', [CourseController::class, 'destroy']);
 
         Route::post('{course}/register', [CourseOrderController::class, 'registerCourse']);
+
     });
 
     Route::prefix('ratings')->group(function () {
