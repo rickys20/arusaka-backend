@@ -29,6 +29,18 @@ class CourseOrderController extends Controller
             ], 404);
         };
 
+        $data_order = CourseOrder::where('users_id', $checkauth->id)
+                         ->where('courses_id', $data_slug->id)
+                         ->with('payment', 'user')
+                         ->first();
+        if($data_order){
+            return response()->json([
+                'message' => 'Course Order in progress',
+                'data' => $data_order
+            ], 201);
+        }
+
+
         // Initialize Midtrans configuration with your MIDTRANS_SERVER_KEY
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$isProduction = false; // Set to false for sandbox environment, true for production
@@ -139,6 +151,10 @@ class CourseOrderController extends Controller
     public function deleteCourseOrder(Request $request, $course_order){
         $data = CourseOrder::where('id',$course_order)->first();
         if ($data){
+            $data_payment = Payment::where('id', $data->payments_id);
+            if($data_payment){
+                $data_payment->delete();
+            }
             $data->delete();
             return response()->json([
                 'message' => 'Delete Success'
