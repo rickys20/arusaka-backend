@@ -47,19 +47,37 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('{category}', [CategoriesController::class, 'deleteCategory']);
         });
 
+        Route::prefix('partners')->group(function () {
+            Route::get('', [PartnerController::class, 'getAll']);
+            Route::post('', [PartnerController::class, 'store']);
+            Route::get('{partner}', [PartnerController::class, 'getDetailPartner']);
+            Route::put('{partner}', [PartnerController::class, 'editPartner']);
+            Route::delete('{partner}', [PartnerController::class, 'deletePartner']);
+        });
+
         Route::prefix('course-order')->group(function () {
             Route::get('', [CourseOrderController::class, 'getAllCoursetOrder']);
             Route::get('{course}', [CourseOrderController::class, 'getUserByCourse']);
             Route::delete('{course_order}', [CourseOrderController::class, 'deleteCourseOrder']);
         });
+
+
     });
 
-    Route::prefix('partners')->group(function () {
-        Route::get('', [PartnerController::class, 'getAll']);
-        Route::post('', [PartnerController::class, 'store']);
-        Route::get('{partner}', [PartnerController::class, 'getDetailPartner']);
-        Route::put('{partner}', [PartnerController::class, 'editPartner']);
-        Route::delete('{partner}', [PartnerController::class, 'deletePartner']);
+    Route::prefix('user')->group(function () {
+        Route::prefix('categories')->group(function () {
+            Route::get('', [CategoriesController::class, 'getAll']);
+            Route::get('{category}', [CategoriesController::class, 'getDetailCategory']);
+        });
+
+        Route::prefix('partners')->group(function () {
+            Route::get('', [PartnerController::class, 'getAll']);
+        });
+
+        Route::prefix('courses')->group(function () {
+            Route::get('', [CourseController::class, 'getActiveCourses']);
+            Route::post('{course}/register', [CourseOrderController::class, 'registerCourse']);
+        });
     });
 
     Route::prefix('materials')->group(function () {
@@ -77,7 +95,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('{course}', [CourseController::class, 'update']);
         Route::delete('{course}', [CourseController::class, 'destroy']);
 
-        Route::post('{course}/register', [CourseOrderController::class, 'registerCourse']);
+
 
     });
 

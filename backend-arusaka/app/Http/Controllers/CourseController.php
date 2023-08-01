@@ -22,6 +22,15 @@ class CourseController extends Controller
         ], 200);
     }
 
+    public function getActiveCourses()
+    {
+        $activeCourses = Course::where('status', 'active')->get();
+        return response()->json([
+            'message' => 'Success',
+            'data' => $activeCourses
+        ], 200);
+    }
+
     public function getDetailCourse(Request $request, $slug)
     {
         $course = Course::where('slug', $slug)->first();
