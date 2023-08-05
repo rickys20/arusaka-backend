@@ -3,12 +3,14 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseOrderController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\RatingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\UserController;
+use App\Models\CourseOrder;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,12 +33,12 @@ Route::prefix('auth')->group(function () {
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
 });
+Route::post('webhook', [CourseOrderController::class, 'webhook']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile']);
     Route::post('logout', [UserController::class, 'logout']);
     Route::middleware('admin')->prefix('admin')->group(function () {
-
         Route::prefix('categories')->group(function () {
             Route::get('', [CategoriesController::class, 'getAll']);
             Route::post('', [CategoriesController::class, 'store']);
@@ -45,6 +47,11 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('{category}', [CategoriesController::class, 'deleteCategory']);
         });
 
+        Route::prefix('course-order')->group(function () {
+            Route::get('', [CourseOrderController::class, 'getAllCoursetOrder']);
+            Route::get('{course}', [CourseOrderController::class, 'getUserByCourse']);
+            Route::delete('{course_order}', [CourseOrderController::class, 'deleteCourseOrder']);
+        });
     });
 
     Route::prefix('partners')->group(function () {
@@ -69,6 +76,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('{course}', [CourseController::class, 'getDetailCourse']);
         Route::put('{course}', [CourseController::class, 'update']);
         Route::delete('{course}', [CourseController::class, 'destroy']);
+
+        Route::post('{course}/register', [CourseOrderController::class, 'registerCourse']);
+
     });
 
     Route::prefix('ratings')->group(function () {

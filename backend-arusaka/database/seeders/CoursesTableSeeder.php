@@ -22,7 +22,6 @@ class CoursesTableSeeder extends Seeder
         DB::table('courses')->insert(array (
             0 =>
             array (
-                'id' => 2,
                 'name' => 'Angklung Jawir',
                 'slug' => 'angklung-jawir',
                 'description' => 'Hola madrisdistas en curso',
@@ -34,7 +33,6 @@ class CoursesTableSeeder extends Seeder
             ),
             1 =>
             array (
-                'id' => 3,
                 'name' => 'Kecapi Jawir',
                 'slug' => 'kecapi-jawir',
                 'description' => 'Hola madrisdistas en curso',

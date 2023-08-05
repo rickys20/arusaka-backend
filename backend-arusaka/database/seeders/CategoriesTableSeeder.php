@@ -31,7 +31,7 @@ class CategoriesTableSeeder extends Seeder
             ),
             1 =>
             array (
-                'id' => 3,
+                'id' => 2,
                 'name' => 'Kecapi',
                 'slug' => 'kecapi',
                 'image' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1688605574/wkbomqpf1drokhq5mgtl.jpg',
