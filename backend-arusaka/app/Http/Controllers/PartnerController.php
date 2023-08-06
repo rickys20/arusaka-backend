@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Partner;
 use Illuminate\Http\Request;
+use Cloudinary\Configuration\Configuration;
+use Cloudinary\Api\Upload\UploadApi;
+use Illuminate\Support\Facades\Storage;
 
 class PartnerController extends Controller
 {
@@ -35,45 +38,93 @@ class PartnerController extends Controller
     //     ], 200);
     // }
 
-    public function store(Request $request)
+    private function uploadImage($image)
     {
-        // validate first
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:partners',
-            'contact' => 'required',
-            'address' => 'required',
+        $path = $image->store('public/images');
+        $imageUrl = Storage::path($path);
+
+        $my_key = env('CLOUDINARY_API_KEY');
+        $my_secret = env('CLOUDINARY_API_SECRET');
+        $my_cloud = env('CLOUDINARY_CLOUD_NAME');
+        Configuration::instance([
+            'cloud' => [
+                'cloud_name' => $my_cloud,
+                'api_key' => $my_key,
+                'api_secret' => $my_secret
+            ]
         ]);
 
-        $partner = new Partner();
+        $uploadApi = new UploadApi();
+        $result = $uploadApi->upload($imageUrl, ['resource_type' => 'auto']);
 
-        $partner->name = $request->name;
-        $partner->email = $request->email;
-        $partner->contact = $request->contact;
-        $partner->address = $request->address;
+        //delete storage
+        Storage::delete($path);
+        return $result;
+    }
 
-        $partner->save();
-        return response()->json([
-            'message' => 'Success',
-            'data' => $partner
-        ], 200);
+    public function store(Request $request)
+    {
+        // Have image upload
+        if ($request->hasFile('image_profile')) {
+            $image = $request->file('image_profile');
+            $result = $this->uploadImage($image);
+            $partner = Partner::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'contact' => $request->contact,
+                'address' => $request->address,
+                'image_profile' => $result['secure_url'],
+            ]);
+            return response()->json([
+                'message' => 'Success',
+                'data' => $partner
+            ], 200);
+        } else {
+            $partner = Partner::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'contact' => $request->contact,
+                'address' => $request->address,
+            ]);
+            return response()->json([
+                'message' => 'Success',
+                'data' => $partner
+            ], 200);
+        }
     }
 
     // update partner based on id
     public function editPartner(Request $request, $slug)
     {
-        $partner = Partner::where('name', $slug)->first();
-
-        $partner->name = $request->name;
-        $partner->email = $request->email;
-        $partner->contact = $request->contact;
-        $partner->address = $request->address;
-
-        $partner->save();
-        return response()->json([
-            'message' => 'Success',
-            'data' => $partner
-        ], 200);
+        // check if there is upload new image
+        if ($request->hasFile('image_profile')) {
+            $image = $request->file('image_profile');
+            $result = $this->uploadImage($image);
+            $partner = Partner::where('name', $slug)->first();
+            $partner->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'contact' => $request->contact,
+                'address' => $request->address,
+                'image_profile' => $result['secure_url'],
+            ]);
+            return response()->json([
+                'message' => 'Success',
+                'data' => $partner
+            ], 200);
+        } else {
+            $partner = Partner::where('name', $slug)->first();
+            $partner->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'contact' => $request->contact,
+                'address' => $request->address,
+            ]);
+            return response()->json([
+                'message' => 'Success',
+                'data' => $partner
+            ], 200);
+        }
     }
 
     public function deletePartner($slug){

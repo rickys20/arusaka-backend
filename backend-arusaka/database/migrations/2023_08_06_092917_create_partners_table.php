@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('contact')->nullable();
             $table->text('address')->nullable();
+            $table->string('image_profile')->nullable();
         });
     }
 

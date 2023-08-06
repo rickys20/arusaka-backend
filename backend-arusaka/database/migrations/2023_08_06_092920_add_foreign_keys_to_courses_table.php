@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->foreign(['partners_id'], 'fk_courses_partners1')->references(['id'])->on('partners')->onUpdate('NO ACTION')->onDelete('NO ACTION');
             $table->foreign(['categories_id'], 'fk_courses_categories1')->references(['id'])->on('categories')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+            $table->foreign(['partners_id'], 'fk_courses_partners1')->references(['id'])->on('partners')->onUpdate('NO ACTION')->onDelete('NO ACTION');
         });
     }
 
@@ -27,8 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->dropForeign('fk_courses_partners1');
             $table->dropForeign('fk_courses_categories1');
+            $table->dropForeign('fk_courses_partners1');
         });
     }
 };
