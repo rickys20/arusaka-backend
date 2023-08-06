@@ -41,4 +41,9 @@ class Course extends Model
                     ->as('orders')
                     ->withPivot('payments_id');
     }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class, 'courses_id');
+    }
 }

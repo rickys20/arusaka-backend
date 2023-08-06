@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Models\Course;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
@@ -16,6 +17,13 @@ class CourseController extends Controller
     public function getAll()
     {
         $courses = Course::all();
+        foreach ($courses as $course) {
+            $ratings = Rating::where('courses_id', $course->id);
+            $rating = $ratings->avg('rating');
+            $course->rating = $rating;
+            $course->rating_count = $ratings->count();
+
+        }
         return response()->json([
             'message' => 'Success',
             'data' => $courses
