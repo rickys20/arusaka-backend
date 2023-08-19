@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('partners', function (Blueprint $table) {
             $table->integer('id', true);
             $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->string('email')->nullable();
             $table->string('contact')->nullable();
+            $table->text('logo')->nullable();
             $table->text('address')->nullable();
             $table->string('image_profile')->nullable();
         });

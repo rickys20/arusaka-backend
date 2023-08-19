@@ -23,20 +23,17 @@ class PartnerController extends Controller
     public function getDetailPartner(Request $request, $slug)
     {
         $partner = Partner::where('name', $slug)->first();
-        return response()->json([
-            'message' => 'Success',
-            'data' => $partner
-        ], 200);
+        if($partner){
+            return response()->json([
+                'message' => 'Success',
+                'data' => $partner
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Partner Not Found'
+            ], 404);
+        }
     }
-
-    // public function getPartnerbyId($id)
-    // {
-    //     $partner = Partner::find($id);
-    //     return response()->json([
-    //         'message' => 'Success',
-    //         'data' => $partner
-    //     ], 200);
-    // }
 
     private function uploadImage($image)
     {
@@ -129,10 +126,14 @@ class PartnerController extends Controller
 
     public function deletePartner($slug){
         $partner = Partner::where('name', $slug)->first();
+        if(!$partner){
+            return response()->json([
+                'message' => 'Partner Not Found'
+            ], 404);
+        }
         $partner->delete();
         return response()->json([
-            'message' => 'Success',
-            'data' => $partner
+            'message' => 'Delete Success',
         ], 200);
     }
 }

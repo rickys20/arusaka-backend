@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Material;
+use App\Models\MaterialOrder;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 

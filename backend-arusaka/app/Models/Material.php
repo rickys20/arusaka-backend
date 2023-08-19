@@ -9,6 +9,7 @@ class Material extends Model
 {
     use HasFactory;
     protected $table = 'materials';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name',
         'slug',
@@ -18,4 +19,9 @@ class Material extends Model
         'courses_id',
     ];
     public $timestamps = false;
+
+    public function materialOrders()
+    {
+        return $this->hasMany(MaterialOrder::class, 'material_id', 'id');
+    }
 }
