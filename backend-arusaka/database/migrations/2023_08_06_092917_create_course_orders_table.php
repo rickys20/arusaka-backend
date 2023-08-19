@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('id', true);
             $table->integer('users_id')->index('fk_users_has_courses_users_idx');
             $table->integer('courses_id')->index('fk_users_has_courses_courses1_idx');
-            $table->integer('payments_id')->index('fk_course_orders_payments1_idx')->onDelete('cascade');
+            $table->integer('payments_id')->index('fk_course_orders_payments1_idx');
         });
     }
 

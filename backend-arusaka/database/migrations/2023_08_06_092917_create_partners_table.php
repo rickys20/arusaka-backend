@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('contact')->nullable();
             $table->text('logo')->nullable();
             $table->text('address')->nullable();
+            $table->string('image_profile')->nullable();
         });
     }
 

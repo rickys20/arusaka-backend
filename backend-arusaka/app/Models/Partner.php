@@ -16,7 +16,9 @@ class Partner extends Model
         'logo',
         'email',
         'contact',
+        'address',
         'description',
+        'image_profile',
     ];
     public $timestamps = false;
 

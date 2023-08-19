@@ -37,7 +37,7 @@ Route::post('webhook', [CourseOrderController::class, 'webhook']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile']);
-    Route::get('logout', [UserController::class, 'logout']);
+    Route::post('logout', [UserController::class, 'logout']);
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::prefix('categories')->group(function () {
             Route::get('', [CategoriesController::class, 'getAll']);
