@@ -10,9 +10,17 @@ class QuizController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $checkauth = auth()->user();
+        if (!$checkauth) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $Quiz = Quiz::all();
+        return response()->json([
+            'message' => 'Success',
+            'data' => $Quiz
+        ], 200);
     }
 
     /**
