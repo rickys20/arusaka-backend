@@ -22,26 +22,58 @@ class MaterialsTableSeeder extends Seeder
         DB::table('materials')->insert(array (
             0 =>
             array (
-                'id' => 2,
-                'name' => 'angklung jawir bab 1 revisi',
-                'slug' => 'angklung-jawir-bab-1-revisi',
+                'name' => 'Dasar Angklung toel',
+                'slug' => 'dasar-angklung-toel',
+                'video' => 'www.youtube.com',
+                'description' => 'ok',
+                'content' => 'ok',
+                'courses_id' => 1,
+            ),
+            1 =>
+            array (
+                'name' => 'Not Angklung Toel',
+                'slug' => 'not-angklung-toel',
+                'video' => 'www.google.com',
+                'description' => 'Hola madrisdistas en curso',
+                'content' => 'sosaosoasoaosaosaosao aoskdoamoasd s asodksoadmmoasm',
+                'courses_id' => 1,
+            ),
+            2 =>
+            array (
+                'name' => 'lagu dasar angklung toel',
+                'slug' => 'lagu-dasar-angklung-toel',
+                'video' => 'www.google.com',
+                'description' => 'Hola madrisdistas en curso',
+                'content' => 'sosaosoasoaosaosaosao aoskdoamoasd s asodksoadmmoasm',
+                'courses_id' => 1,
+            ),
+            3 =>
+            array (
+                'name' => 'Dasar Angklung baduy',
+                'slug' => 'dasar-angklung-baduy',
                 'video' => 'www.youtube.com',
                 'description' => 'ok',
                 'content' => 'ok',
                 'courses_id' => 2,
             ),
-            1 =>
+            4 =>
             array (
-                'id' => 3,
-                'name' => 'Angklung Jawir Bab 2',
-                'slug' => 'angklung-jawir-bab-2',
+                'name' => 'Not Angklung baduy',
+                'slug' => 'not-angklung-baduy',
+                'video' => 'www.google.com',
+                'description' => 'Hola madrisdistas en curso',
+                'content' => 'sosaosoasoaosaosaosao aoskdoamoasd s asodksoadmmoasm',
+                'courses_id' => 2,
+            ),
+            5 =>
+            array (
+                'name' => 'lagu dasar angklung baduy',
+                'slug' => 'lagu-dasar-angklung-baduy',
                 'video' => 'www.google.com',
                 'description' => 'Hola madrisdistas en curso',
                 'content' => 'sosaosoasoaosaosaosao aoskdoamoasd s asodksoadmmoasm',
                 'courses_id' => 2,
             ),
         ));
-
-
     }
 }

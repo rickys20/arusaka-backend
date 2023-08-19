@@ -5,6 +5,7 @@ use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseOrderController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\MaterialOrderController;
 use App\Http\Controllers\RatingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,12 +29,13 @@ Route::get('test', function () {
         'message' => 'Hello from staging'
     ], 200);
 });
+Route::get('', [CourseController::class, 'getActiveCourses']);
+Route::post('webhook', [CourseOrderController::class, 'webhook']);
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [UserController::class, 'register']);
     Route::post('login', [UserController::class, 'login']);
 });
-Route::post('webhook', [CourseOrderController::class, 'webhook']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile']);
@@ -61,7 +63,13 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('{course_order}', [CourseOrderController::class, 'deleteCourseOrder']);
         });
 
-
+        Route::prefix('courses')->group(function () {
+            Route::get('', [CourseController::class, 'getAll']);
+            Route::post('', [CourseController::class, 'store']);
+            Route::get('{course}', [CourseController::class, 'getDetailCourse']);
+            Route::put('{course}', [CourseController::class, 'update']);
+            Route::delete('{course}', [CourseController::class, 'destroy']);
+        });
     });
 
     Route::prefix('user')->group(function () {
@@ -75,8 +83,11 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 
         Route::prefix('courses')->group(function () {
-            Route::get('', [CourseController::class, 'getActiveCourses']);
+            Route::get('', [CourseController::class, 'getActiveCoursesUser']);
+            Route::get('mycourses', [CourseController::class, 'myCourse']);
             Route::post('{course}/register', [CourseOrderController::class, 'registerCourse']);
+            Route::get('{course}/start', [CourseOrderController::class, 'startCourse']);
+            Route::get('{course}/{material}', [MaterialOrderController::class, 'detail']);
         });
     });
 
@@ -94,9 +105,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('{course}', [CourseController::class, 'getDetailCourse']);
         Route::put('{course}', [CourseController::class, 'update']);
         Route::delete('{course}', [CourseController::class, 'destroy']);
-
-
-
     });
 
     Route::prefix('ratings')->group(function () {

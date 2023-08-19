@@ -9,8 +9,8 @@ class CourseOrder extends Model
 {
     use HasFactory;
     protected $table = 'course_orders';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id',
         'users_id',
         'courses_id',
         'payments_id',

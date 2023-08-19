@@ -59,33 +59,6 @@ class PartnerController extends Controller
         return $result;
     }
 
-    private function uploadImage($image)
-    {
-        $path = $image->store('public/images');
-        $imageUrl = Storage::path($path);
-
-        $my_key = env('CLOUDINARY_API_KEY');
-        $my_secret = env('CLOUDINARY_API_SECRET');
-        $my_cloud = env('CLOUDINARY_CLOUD_NAME');
-        Configuration::instance([
-            'cloud' => [
-                'cloud_name' => $my_cloud,
-                'api_key' => $my_key,
-                'api_secret' => $my_secret
-            ]
-        ]);
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $uploadApi = new UploadApi();
-        $result = $uploadApi->upload($imageUrl, ['resource_type' => 'auto']);
-
-        //delete storage
-        Storage::delete($path);
-        return $result;
-    }
-
     public function store(Request $request)
     {
         // Have image upload

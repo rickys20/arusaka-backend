@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Models\Course;
+use App\Models\Categories;
 use App\Models\Rating;
 use Illuminate\Http\Request;
 use Cloudinary\Configuration\Configuration;
@@ -14,6 +15,84 @@ use Illuminate\Support\Facades\Validator;
 
 class CourseController extends Controller
 {
+    // PUBLIC ROUTE
+    public function getActiveCourses(Request $request)
+    {
+        $query = Course::with('category')->where('status', 'active');
+        // Paginate the results with a specified number of items per page (e.g., 10)
+        $perPage = $request->query('per_page', 10); // Default to 10 items per page
+
+        // Execute the query and paginate the results
+        $filteredCourses = $query->paginate($perPage);
+
+        return response()->json([
+            'message' => 'Success',
+            'data' => $filteredCourses
+        ], 200);
+    }
+
+    // USER ROUTE
+    public function getActiveCoursesUser(Request $request)
+    {
+        $user = $request->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+        $perPage = $request->query('per_page', 10); // Default to 10 items per page
+
+        $query = Course::with('category')
+            ->where('status', 'active')
+            ->whereNotIn('id', function ($query) {
+                $query->select('courses_id')
+                    ->from('course_orders')
+                    ->whereColumn('course_orders.courses_id', 'courses.id')
+                    ->where('users_id', auth()->user()->id);
+            });
+
+        // Execute the query and paginate the results
+        $filteredCourses = $query->paginate($perPage);
+
+        return response()->json([
+            'message' => 'Success',
+            'data' => $filteredCourses
+        ], 200);
+    }
+
+    public function myCourse(Request $request)
+    {
+        $user = $request->user();
+        if (!$user) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 401);
+        }
+        $perPage = $request->query('per_page', 10); // Default to 10 items per page
+
+        $query = Course::with('category')
+            ->with('materials')
+            ->where('status', 'active')
+            ->whereIn('id', function ($query) {
+                $query->select('courses_id')
+                    ->from('course_orders')
+                    ->whereColumn('course_orders.courses_id', 'courses.id')
+                    ->where('users_id', auth()->user()->id);
+            });
+
+        // Execute the query and paginate the results
+        $filteredCourses = $query->paginate($perPage);
+
+        return response()->json([
+            'message' => 'Success',
+            'data' => $filteredCourses
+        ], 200);
+    }
+
+
+
+    // ADMIN ROUTE
+
     public function getAll()
     {
         $courses = Course::all();
@@ -22,20 +101,10 @@ class CourseController extends Controller
             $rating = $ratings->avg('rating');
             $course->rating = $rating;
             $course->rating_count = $ratings->count();
-
         }
         return response()->json([
             'message' => 'Success',
             'data' => $courses
-        ], 200);
-    }
-
-    public function getActiveCourses()
-    {
-        $activeCourses = Course::where('status', 'active')->get();
-        return response()->json([
-            'message' => 'Success',
-            'data' => $activeCourses
         ], 200);
     }
 
@@ -46,30 +115,6 @@ class CourseController extends Controller
             'message' => 'Success',
             'data' => $course
         ], 200);
-    }
-
-    private function uploadImage($image)
-    {
-        $path = $image->store('public/images');
-        $imageUrl = Storage::path($path);
-
-        $my_key = env('CLOUDINARY_API_KEY');
-        $my_secret = env('CLOUDINARY_API_SECRET');
-        $my_cloud = env('CLOUDINARY_CLOUD_NAME');
-        Configuration::instance([
-            'cloud' => [
-                'cloud_name' => $my_cloud,
-                'api_key' => $my_key,
-                'api_secret' => $my_secret
-            ]
-        ]);
-
-        $uploadApi = new UploadApi();
-        $result = $uploadApi->upload($imageUrl, ['resource_type' => 'auto']);
-
-        //delete storage
-        Storage::delete($path);
-        return $result;
     }
 
     public function store(Request $request)
@@ -155,5 +200,29 @@ class CourseController extends Controller
             'message' => 'Courses deleted successfully',
             'data' => $course
         ], 200);
+    }
+
+    private function uploadImage($image)
+    {
+        $path = $image->store('public/images');
+        $imageUrl = Storage::path($path);
+
+        $my_key = env('CLOUDINARY_API_KEY');
+        $my_secret = env('CLOUDINARY_API_SECRET');
+        $my_cloud = env('CLOUDINARY_CLOUD_NAME');
+        Configuration::instance([
+            'cloud' => [
+                'cloud_name' => $my_cloud,
+                'api_key' => $my_key,
+                'api_secret' => $my_secret
+            ]
+        ]);
+
+        $uploadApi = new UploadApi();
+        $result = $uploadApi->upload($imageUrl, ['resource_type' => 'auto']);
+
+        //delete storage
+        Storage::delete($path);
+        return $result;
     }
 }
