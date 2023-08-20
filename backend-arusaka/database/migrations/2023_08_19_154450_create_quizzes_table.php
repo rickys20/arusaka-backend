@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
-            $table->string('quiz_name');
+            $table->string('quiz_name')->unique();
+            $table->string('slug')->unique();
             $table->Integer('courses_id');
             $table->Integer('minimum_material');
             $table->text('desc')->nullable();

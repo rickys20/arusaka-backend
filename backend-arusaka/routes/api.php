@@ -7,6 +7,8 @@ use App\Http\Controllers\CourseOrderController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\MaterialOrderController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\QuizItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
@@ -69,6 +71,22 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('{course}', [CourseController::class, 'getDetailCourse']);
             Route::put('{course}', [CourseController::class, 'update']);
             Route::delete('{course}', [CourseController::class, 'destroy']);
+        });
+
+        Route::prefix('quiz')->group(function () {
+            Route::get('', [QuizController::class, 'index']);
+            Route::post('{course}', [QuizController::class, 'store']);
+            Route::post('{course}/{quiz}', [QuizController::class, 'edit']);
+            Route::get('{Quiz}', [QuizController::class, 'getDetailQuiz']);
+            Route::put('{Quiz}', [QuizController::class, 'update']);
+            Route::delete('{course}/{Quiz}', [QuizController::class, 'destroy']);
+        });
+
+        Route::prefix('quiz_item')->group(function () {
+            Route::get('', [QuizItemController::class, 'index']);
+            Route::post('{course}/{quiz}', [QuizItemController::class, 'store']);
+            Route::post('{course}/{quiz}/{no_item}', [QuizItemController::class, 'edit']);
+            Route::delete('{course}/{quiz}/{no_item}', [QuizItemController::class, 'destroy']);
         });
     });
 

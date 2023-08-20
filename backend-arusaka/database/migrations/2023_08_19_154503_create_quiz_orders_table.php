@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('question')->nullable();
             $table->text('answers')->nullable();
             $table->Integer('user_id');
+            $table->unsignedBigInteger('quiz_id');
             $table->timestamp('start_at')->nullable();
             $table->timestamp('finish_at')->nullable();
             $table->double('score')->nullable();
@@ -23,6 +24,10 @@ return new class extends Migration
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('quiz_id')
+                ->references('id')
+                ->on('quizzes')
                 ->onDelete('cascade');
         });
     }
