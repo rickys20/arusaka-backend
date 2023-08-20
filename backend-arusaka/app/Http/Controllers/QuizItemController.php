@@ -72,9 +72,23 @@ class QuizItemController extends Controller
         }
     }
 
-    public function show(QuizItem $quizItem)
+    public function show(Request $request, $course, $quiz)
     {
-        //
+        $dataQuiz = Quiz::where('slug',$quiz)->first();
+        if($dataQuiz){
+            $dataSoal = QuizItem::where('quiz_id',$dataQuiz->id)->get();
+            $dataNoSoal = QuizItem::where('quiz_id', $dataQuiz->id)->pluck('id')->toArray();
+
+            return response()->json([
+                'message' => 'Quiz Item created successfully',
+                'no_soal' => $dataNoSoal,
+                'data' => $dataSoal
+            ], 200);
+        }else{
+            return response()->json([
+                'data' => 'Data Quiz not found'
+            ], 400);
+        }
     }
 
     public function edit(Request $request, $course, $quiz, $no_item)

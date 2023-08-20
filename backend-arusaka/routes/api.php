@@ -9,6 +9,7 @@ use App\Http\Controllers\MaterialOrderController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizItemController;
+use App\Http\Controllers\QuizOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
@@ -85,6 +86,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::prefix('quiz_item')->group(function () {
             Route::get('', [QuizItemController::class, 'index']);
             Route::post('{course}/{quiz}', [QuizItemController::class, 'store']);
+            Route::get('{course}/{quiz}', [QuizItemController::class, 'show']);
             Route::post('{course}/{quiz}/{no_item}', [QuizItemController::class, 'edit']);
             Route::delete('{course}/{quiz}/{no_item}', [QuizItemController::class, 'destroy']);
         });
@@ -106,6 +108,16 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('{course}/register', [CourseOrderController::class, 'registerCourse']);
             Route::get('{course}/start', [CourseOrderController::class, 'startCourse']);
             Route::get('{course}/{material}', [MaterialOrderController::class, 'detail']);
+        });
+
+        Route::prefix('quiz')->group(function () {
+            Route::get('{quiz}/start', [QuizOrderController::class, 'getQuiz']);
+            Route::get('{quiz}/{number}', [QuizOrderController::class, 'getQuizPerNum']);
+            Route::post('{quiz}/{number}', [QuizOrderController::class, 'submitAnswer']);
+            // Route::get('mycourses', [QuizOrderController::class, 'myCourse']);
+            // Route::post('{course}/register', [CourseOrderController::class, 'registerCourse']);
+            // Route::get('{course}/start', [CourseOrderController::class, 'startCourse']);
+            // Route::get('{course}/{material}', [MaterialOrderController::class, 'detail']);
         });
     });
 
