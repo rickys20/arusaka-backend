@@ -10,11 +10,14 @@ use App\Http\Controllers\RatingController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\QuizItemController;
 use App\Http\Controllers\QuizOrderController;
+use App\Http\Controllers\LivePracticeController;
+use App\Http\Controllers\LivePracticeOrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\UserController;
 use App\Models\CourseOrder;
+use App\Models\LivePracticeOrder;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +93,14 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('{course}/{quiz}/{no_item}', [QuizItemController::class, 'edit']);
             Route::delete('{course}/{quiz}/{no_item}', [QuizItemController::class, 'destroy']);
         });
+
+        Route::prefix('live_practice')->group(function () {
+            Route::get('', [LivePracticeController::class, 'index']);
+            Route::post('{course}', [LivePracticeController::class, 'store']);
+            // Route::get('{course}/{quiz}', [LivePracticeController::class, 'show']);
+            Route::post('{course}/{live}', [LivePracticeController::class, 'edit']);
+            Route::delete('{course}/{live}', [LivePracticeController::class, 'destroy']);
+        });
     });
 
     Route::prefix('user')->group(function () {
@@ -112,12 +123,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::prefix('quiz')->group(function () {
             Route::get('{quiz}/start', [QuizOrderController::class, 'getQuiz']);
+            Route::get('{quiz}/finish', [QuizOrderController::class, 'finishQuiz']);
             Route::get('{quiz}/{number}', [QuizOrderController::class, 'getQuizPerNum']);
             Route::post('{quiz}/{number}', [QuizOrderController::class, 'submitAnswer']);
-            // Route::get('mycourses', [QuizOrderController::class, 'myCourse']);
-            // Route::post('{course}/register', [CourseOrderController::class, 'registerCourse']);
-            // Route::get('{course}/start', [CourseOrderController::class, 'startCourse']);
-            // Route::get('{course}/{material}', [MaterialOrderController::class, 'detail']);
+        });
+
+        Route::prefix('live_practice')->group(function () {
+            Route::get('{course}', [LivePracticeOrderController::class, 'index']);
         });
     });
 

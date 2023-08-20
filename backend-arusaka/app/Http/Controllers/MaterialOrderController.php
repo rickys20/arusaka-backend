@@ -6,6 +6,8 @@ use App\Models\MaterialOrder;
 use App\Models\Material;
 use App\Models\CourseOrder;
 use App\Models\Course;
+use App\Models\LivePractice;
+use App\Models\LivePracticeOrder;
 use Illuminate\Http\Request;
 
 class MaterialOrderController extends Controller
@@ -32,9 +34,24 @@ class MaterialOrderController extends Controller
                     // Update the status to 'unlocked'
                     $unlockedMaterial->update(['status' => 'unlocked']);
                 } else {
-                    return response()->json([
-                        'message' => 'Material not found or is not eligible for unlocking.',
-                    ], 404);
+                    // saat sudah akses semua data nya, maka nge unlocked semua live practice
+                    $dataCourse = Course::where('slug', $course)->first();
+                    if($dataCourse){
+                        $dataLivePractice = LivePractice::where('courses_id', $dataCourse->id)->get();
+                        $jumlah = count($dataLivePractice);
+
+                        foreach ($dataLivePractice as $livePracticeItem) {
+                            $livePracticeOrder = new LivePracticeOrder();
+                            $livePracticeOrder->user_id = $checkauth->id;
+                            $livePracticeOrder->live_practice_id = $livePracticeItem->id;
+                            $livePracticeOrder->status = 'unlocked';
+                            // Set properti lain yang perlu Anda set
+                            // ...
+
+                            $livePracticeOrder->save(); // Simpan LivePracticeOrder untuk setiap LivePractice
+                        }
+                    }
+
                 }
                 return response()->json([
                     'message' => 'Success',
