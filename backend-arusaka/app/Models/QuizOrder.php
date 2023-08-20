@@ -19,6 +19,8 @@ class QuizOrder extends Model
         'c',
         'd',
         'solution',
-        'explanation'
+        'explanation',
+        'finish_at',
+        'score'
     ];
 }

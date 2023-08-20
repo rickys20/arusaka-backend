@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('live_practices', function (Blueprint $table) {
+        Schema::create('live_practice_orders', function (Blueprint $table) {
             $table->id();
-            $table->Integer('courses_id');
-            $table->string('title')->unique();
-            $table->string('slug')->unique();
-            $table->string('partiture'); //url gambar not
-            $table->time('time')->nullable();
+            $table->Integer('user_id');
+            $table->unsignedBigInteger('live_practice_id');
             $table->enum('status', ['locked', 'unlocked'])->default('locked');
             $table->timestamps();
-            $table->foreign('courses_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('courses')
+                ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('live_practice_id')
+                ->references('id')
+                ->on('live_practices')
                 ->onDelete('cascade');
         });
     }
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('live_practices');
+        Schema::dropIfExists('live_practice_orders');
     }
 };

@@ -114,43 +114,47 @@ class QuizOrderController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function finishQuiz(Request $request, $quiz)
     {
-        //
-    }
+        $checkauth = auth()->user();
+        if (!$checkauth) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        };
+        $dataQuiz = Quiz::where('slug', $quiz)->first();
+        $data_order = QuizOrder::where('user_id', $checkauth->id)
+            ->where('quiz_id', $dataQuiz->id)
+            ->first();
+        $data_order->update(['finish_at' => now()]);
+        $array_question = json_decode($data_order->question, true);
+        $array_answers = json_decode($data_order->answers, true);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(QuizOrder $quizOrder)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(QuizOrder $quizOrder)
-    {
-        //
-    }
+        $benar = 0;
+        $salah = 0;
+        $kosong = 0;
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, QuizOrder $quizOrder)
-    {
-        //
-    }
+        // cek score
+        for ($q = 0; $q < count($array_question); $q++) {
+            $solution = QuizItem::select('id', 'solution')->where('id', $array_question[$q])->get();
+            if ($array_answers[$q] == '0') {
+                $kosong++;
+            } else if ($array_answers[$q] == $solution->first()->solution) {
+                $benar++;
+            } else {
+                $salah++;
+            }
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(QuizOrder $quizOrder)
-    {
-        //
+        $score = $benar / count($array_question) * 100;
+        $data_order->update(['score' => $score]);
+
+        return response()->json([
+            'message' => 'Data Sumbitted',
+            'finish_at' => $data_order->finish_at,
+            'score' => $score,
+            'benar' => $benar,
+            'salah' => $salah,
+            'kosong' => $kosong,
+        ]);
     }
 }
