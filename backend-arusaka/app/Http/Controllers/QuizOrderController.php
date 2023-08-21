@@ -157,4 +157,20 @@ class QuizOrderController extends Controller
             'kosong' => $kosong,
         ]);
     }
+
+    public function report(Request $request, $quiz)
+    {
+        $checkauth = auth()->user();
+        if (!$checkauth) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        };
+        $dataQuiz = Quiz::where('slug', $quiz)->first();
+        $data_order = QuizOrder::where('user_id', $checkauth->id)
+            ->where('quiz_id', $dataQuiz->id)
+            ->get();
+
+        return response()->json([
+            'message' => $data_order
+        ]);
+    }
 }

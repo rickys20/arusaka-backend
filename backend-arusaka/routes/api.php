@@ -128,6 +128,10 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('{quiz}/{number}', [QuizOrderController::class, 'submitAnswer']);
         });
 
+        Route::prefix('report')->group(function () {
+            Route::get('{quiz}', [QuizOrderController::class, 'getQuiz']);
+        });
+
         Route::prefix('live_practice')->group(function () {
             Route::get('{course}', [LivePracticeOrderController::class, 'index']);
         });
