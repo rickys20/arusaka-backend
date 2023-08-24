@@ -19,11 +19,13 @@ use Illuminate\Validation\Rule;
 use Symfony\Contracts\Service\Attribute\Required;
 use Laravel\Passport\HasApiTokens;
 
+
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Psy\CodeCleaner\FunctionContextPass;
 
 class UserController extends Controller
 {
@@ -116,5 +118,45 @@ class UserController extends Controller
                 'message' => 'Profile retrieved failed',
             ], 400);
         }
+    }
+
+    public function update(Request $request)
+    {
+        $user = auth()->user(); // Get the authenticated user
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'sometimes|string|min:8',
+            'mobile_phone' => 'sometimes|string|min:8',
+            'address'  => 'sometimes|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        // Update user data based on the request
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        if ($request->has('mobile_phone')) {
+            $user->mobile_phone = $request->mobile_phone;
+        }
+        if ($request->has('address')) {
+            $user->address = $request->address;
+        }
+        $user->save();
+
+        $newToken = $user->createToken('authToken', ['*'], Carbon::now()->addHour(10));
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'user' => $user,
+            'access_token' => $newToken,
+        ]);
     }
 }
