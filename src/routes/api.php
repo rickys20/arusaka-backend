@@ -32,7 +32,7 @@ use App\Models\LivePracticeOrder;
 
 Route::get('test', function () {
     return new JsonResponse([
-        'message' => 'Hello from staging'
+        'message' => 'Hello from staging : ok!'
     ], 200);
 });
 Route::get('', [CourseController::class, 'getActiveCourses']);
