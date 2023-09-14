@@ -22,51 +22,92 @@ class MaterialsTableSeeder extends Seeder
         DB::table('materials')->insert(array (
             0 =>
             array (
+<<<<<<< HEAD
                 'name' => 'Dasar Angklung Toel',
                 'slug' => 'dasar-angklung-toel',
                 'video' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/AVsETctOQAk?si=c65ffqB88VP3n4_d" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
                 'description' => 'Pelajaran dasar untuk mempelajari angklung Toel.',
                 'content' => 'Konten pembelajaran dasar angklung Toel akan memberikan pemahaman tentang cara bermain angklung dan elemen-elemen dasar yang perlu dikuasai.',
+=======
+                'name' => 'Dasar Angklung toel',
+                'slug' => 'dasar-angklung-toel',
+                'video' => 'www.youtube.com',
+                'description' => 'ok',
+                'content' => 'ok',
+>>>>>>> c022205 (new branch)
                 'courses_id' => 1,
             ),
             1 =>
             array (
+<<<<<<< HEAD
                 'name' => 'Angklung di Mata Dunia',
                 'slug' => 'angklung-di-mata-dunia',
                 'video' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/0as_omiQsME?si=w22tGVa0eiiag5fk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
                 'description' => 'Pandangan global tentang angklung dan pengaruhnya.',
                 'content' => 'Dalam pelajaran ini, kita akan menjelajahi bagaimana angklung telah dikenal di berbagai belahan dunia dan memahami dampaknya terhadap budaya musik.',
+=======
+                'name' => 'Not Angklung Toel',
+                'slug' => 'not-angklung-toel',
+                'video' => 'www.google.com',
+                'description' => 'Hola madrisdistas en curso',
+                'content' => 'sosaosoasoaosaosaosao aoskdoamoasd s asodksoadmmoasm',
+>>>>>>> c022205 (new branch)
                 'courses_id' => 1,
             ),
             2 =>
             array (
+<<<<<<< HEAD
                 'name' => 'Angklung Toel : Bohemian Rhapsody',
                 'slug' => 'angklung-toel-bohemian-rapsody',
                 'video' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/tWcSBql597s?si=COJFLqyb1eBmEgK7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
                 'description' => 'Pentas angklung dengan tampilan unik dari Bohemian Rhapsody.',
                 'content' => 'Mari kita telusuri bagaimana angklung Toel membawakan lagu terkenal "Bohemian Rhapsody" dengan nuansa yang berbeda dan kreatif.',
+=======
+                'name' => 'lagu dasar angklung toel',
+                'slug' => 'lagu-dasar-angklung-toel',
+                'video' => 'www.google.com',
+                'description' => 'Hola madrisdistas en curso',
+                'content' => 'sosaosoasoaosaosaosao aoskdoamoasd s asodksoadmmoasm',
+>>>>>>> c022205 (new branch)
                 'courses_id' => 1,
             ),
             3 =>
             array (
+<<<<<<< HEAD
                 'name' => 'Dasar Angklung Baduy',
                 'slug' => 'dasar-angklung-baduy',
                 'video' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/HbmqpbyCGpE?si=g4DmqY0_uIYtAWV_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
                 'description' => 'Pelajaran dasar untuk memahami angklung Baduy.',
                 'content' => 'Dalam pembelajaran ini, kita akan fokus pada fondasi bermain angklung Baduy, termasuk teknik dasar dan pentingnya dalam budaya masyarakat Baduy.',
+=======
+                'name' => 'Dasar Angklung baduy',
+                'slug' => 'dasar-angklung-baduy',
+                'video' => 'www.youtube.com',
+                'description' => 'ok',
+                'content' => 'ok',
+>>>>>>> c022205 (new branch)
                 'courses_id' => 2,
             ),
             4 =>
             array (
+<<<<<<< HEAD
                 'name' => 'Angklung Baduy di Mata Masyarakat',
                 'slug' => 'angklung-baduy-di-mata-masyarakat',
                 'video' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/FaVHK7aR5Eg?si=BPkHKGCrsGfFvDXs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
                 'description' => 'Pengamatan terhadap peran angklung Baduy dalam masyarakat.',
                 'content' => 'Dalam pelajaran ini, kita akan mengamati bagaimana angklung Baduy memiliki peran penting dalam masyarakat dan bagaimana hal tersebut diapresiasi oleh masyarakat luas.',
+=======
+                'name' => 'Not Angklung baduy',
+                'slug' => 'not-angklung-baduy',
+                'video' => 'www.google.com',
+                'description' => 'Hola madrisdistas en curso',
+                'content' => 'sosaosoasoaosaosaosao aoskdoamoasd s asodksoadmmoasm',
+>>>>>>> c022205 (new branch)
                 'courses_id' => 2,
             ),
             5 =>
             array (
+<<<<<<< HEAD
                 'name' => 'Angklung Baduy dengan Tarian',
                 'slug' => 'angklung-baduy-dengan-tarian',
                 'video' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/KgiuOIH0Js0?si=2SORBYA53KxVH5jM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
@@ -191,6 +232,15 @@ class MaterialsTableSeeder extends Seeder
                 'content' => 'Dalam tutorial ini, kita akan membahas teknik vibrasi yang dapat diterapkan dalam permainan Rinding Lumajang. Anda akan belajar cara menciptakan efek suara yang khas dan menarik melalui penggunaan teknik vibrasi pada alat musik ini. Kami akan memberikan panduan langkah demi langkah untuk membantu Anda menguasai teknik ini dan menggunakannya dalam permainan Rinding Lumajang.',
                 'courses_id' => 6,
             ),
+=======
+                'name' => 'lagu dasar angklung baduy',
+                'slug' => 'lagu-dasar-angklung-baduy',
+                'video' => 'www.google.com',
+                'description' => 'Hola madrisdistas en curso',
+                'content' => 'sosaosoasoaosaosaosao aoskdoamoasd s asodksoadmmoasm',
+                'courses_id' => 2,
+            ),
+>>>>>>> c022205 (new branch)
         ));
     }
 }
