@@ -75,6 +75,39 @@ class CoursesTableSeeder extends Seeder
                 'categories_id' => 2,
                 'partners_id' => 1,
             ),
+            5 =>
+            array (
+                'name' => 'Belajar Alat Musik Rinding',
+                'slug' => 'belajar-alat-musik-rinding',
+                'description' => 'Belajar memainkan alat musik rinding, alat musik khas daerah Jawa Barat.',
+                'status' => 'ACTIVE',
+                'image' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1691328239/Kacapi-minangkabau_lahj0g.jpg',
+                'price' => 100.000,
+                'categories_id' => 3,
+                'partners_id' => 3,
+            ),
+            6 =>
+            array (
+                'name' => 'Belajar Alat Musik Demung',
+                'slug' => 'belajar-alat-musik-demung',
+                'description' => 'Demung adalah alat musik tradisional Jawa Tengah yang masih termasuk di dalam keluarga balungan. Dalam pagelaran musik gamelan, biasanya terdapat dua jenis demung, yaitu demung dengan nada pelog dan slendro. Meskipun bentuknya cukup besar, namun demung justru menghasilkan nada oktaf terendah dalam alat musik balungan.',
+                'status' => 'ACTIVE',
+                'image' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1691328239/Kacapi-minangkabau_lahj0g.jpg',
+                'price' => 150.000,
+                'categories_id' => 2,
+                'partners_id' => 2,
+            ),
+            7 =>
+            array (
+                'name' => 'Belajar Alat Musik Kendang',
+                'slug' => 'belajar-alat-musik-kendang',
+                'description' => 'Kendang atau gendang adalah alat musik tradisional Indonesia yang dibuat dari batang pohon yang bagian dalamnya dibuang. Untuk kepalanya, digunakan kulit hewan seperti sapi atau kambing.',
+                'status' => 'ACTIVE',
+                'image' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1691328239/Kacapi-minangkabau_lahj0g.jpg',
+                'price' => 150.000,
+                'categories_id' => 2,
+                'partners_id' => 2,
+            ),
         ));
 
     }
