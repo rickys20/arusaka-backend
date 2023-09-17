@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\QuizOrder;
 use App\Models\QuizItem;
 use App\Models\Quiz;
+use App\Models\Course;
 use App\Models\MaterialOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +13,25 @@ use Illuminate\Support\Str;
 
 class QuizOrderController extends Controller
 {
+    public function listQuiz(Request $request, $course)
+    {
+        $checkauth = auth()->user();
+        if (!$checkauth) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $dataCourse = Course::where('slug', $course)->first();
+        if ($dataCourse) {
+            $list = Quiz::where('courses_id', $dataCourse->id)->get();
+            return response()->json([
+                'message' => $list
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Quiz Not Found'
+            ], 400);
+        }
+    }
+
     public function getQuiz(Request $request, $quiz)
     {
         $dataQuiz = Quiz::where('slug', $quiz)->first();
@@ -86,7 +106,7 @@ class QuizOrderController extends Controller
         } else {
             return response()->json([
                 'message' => 'Quiz Not Found'
-            ], 200);
+            ], 400);
         }
     }
 
