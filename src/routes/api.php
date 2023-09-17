@@ -124,6 +124,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 
         Route::prefix('quiz')->group(function () {
+            Route::get('{quiz}/list', [QuizOrderController::class, 'listQuiz']);
             Route::get('{quiz}/start', [QuizOrderController::class, 'getQuiz']);
             Route::get('{quiz}/finish', [QuizOrderController::class, 'finishQuiz']);
             Route::get('{quiz}/{number}', [QuizOrderController::class, 'getQuizPerNum']);

@@ -99,7 +99,12 @@ class CourseController extends Controller
         foreach ($courses as $course) {
             $ratings = Rating::where('courses_id', $course->id);
             $rating = $ratings->avg('rating');
+            # case when ratings->avg('rating') is null, then set rating to 0
+            if ($rating == null) {
+                $rating = 0;
+            }
             $course->rating = $rating;
+            # if ratings->count() is null, then set rating_count to 0
             $course->rating_count = $ratings->count();
         }
         return response()->json([
@@ -110,7 +115,7 @@ class CourseController extends Controller
 
     public function getDetailCourse(Request $request, $slug)
     {
-        $course = Course::where('slug', $slug)->first();
+        $course = Course::where('slug', $slug)->with(['materials','ratings'])->first();
         return response()->json([
             'message' => 'Success',
             'data' => $course
