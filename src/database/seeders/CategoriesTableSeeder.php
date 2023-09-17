@@ -38,6 +38,24 @@ class CategoriesTableSeeder extends Seeder
                 'created_at' => '2023-07-06 01:06:15',
                 'updated_at' => '2023-07-06 01:06:15',
             ),
+            2 =>
+            array (
+                'id' => 3,
+                'name' => 'Rinding',
+                'slug' => 'rinding',
+                'image' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1688605574/wkbomqpf1drokhq5mgtl.jpg',
+                'created_at' => '2023-07-06 01:06:15',
+                'updated_at' => '2023-07-06 01:06:15',
+            ),
+            3 =>
+            array (
+                'id' => 4,
+                'name' => 'Gamelan',
+                'slug' => 'gamelan',
+                'image' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1688605574/wkbomqpf1drokhq5mgtl.jpg',
+                'created_at' => '2023-07-06 01:06:15',
+                'updated_at' => '2023-07-06 01:06:15',
+            ),
         ));
 
 

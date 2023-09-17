@@ -32,7 +32,7 @@ use App\Models\LivePracticeOrder;
 
 Route::get('test', function () {
     return new JsonResponse([
-        'message' => 'Hello from staging'
+        'message' => 'Hello from staging : ok!'
     ], 200);
 });
 Route::get('', [CourseController::class, 'getActiveCourses']);
@@ -46,6 +46,7 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile']);
     Route::put('profile', [UserController::class, 'update']);
+    Route::put('profile/password', [UserController::class, 'updatePassword']);
     Route::post('logout', [UserController::class, 'logout']);
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::prefix('categories')->group(function () {

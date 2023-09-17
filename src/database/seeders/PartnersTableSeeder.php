@@ -23,7 +23,7 @@ class PartnersTableSeeder extends Seeder
             0 =>
             array (
                 'id' => 1,
-                'name' => 'baksara',
+                'name' => 'Baksara',
                 'email' => 'cs@baksara.com',
                 'contact' => '+62852-3844-8854',
                 'address' => 'Keputih, Surabaya',
@@ -32,10 +32,19 @@ class PartnersTableSeeder extends Seeder
             1 =>
             array (
                 'id' => 2,
-                'name' => 'traveloka',
-                'email' => 'cs@traveloka.com',
-                'contact' => '+62853-1111-1010',
-                'address' => 'BSD City, Tangerang',
+                'name' => 'Karabels',
+                'email' => 'cs@karabels.com',
+                'contact' => '+62852-3844-8854',
+                'address' => 'SMAN 15 Surabaya',
+                'image_profile' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1691316510/ihyersi3sje2grii3gdo.jpg',
+            ),
+            2 =>
+            array (
+                'id' => 3,
+                'name' => 'Lamahyangan',
+                'email' => 'cs@lamahyangan.com',
+                'contact' => '+62812-3195-8067',
+                'address' => 'Jatimulyo, Surabaya',
                 'image_profile' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1691316510/ihyersi3sje2grii3gdo.jpg',
             ),
         ));

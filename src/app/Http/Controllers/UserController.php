@@ -125,11 +125,11 @@ class UserController extends Controller
         $user = auth()->user(); // Get the authenticated user
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'sometimes|string|min:8',
             'mobile_phone' => 'sometimes|string|min:8',
-            'address'  => 'sometimes|string',
+            'address' => 'sometimes|string',
         ]);
 
         if ($validator->fails()) {
@@ -137,12 +137,20 @@ class UserController extends Controller
         }
 
         // Update user data based on the request
-        $user->name = $request->name;
-        $user->email = $request->email;
-
-        if ($request->has('password')) {
-            $user->password = Hash::make($request->password);
+        // if provided
+        if ($request->has('name')) {
+            $user->name = $request->name;
         }
+
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+
+        // Update password if 'password' is provided
+        if ($request->has('password')) {
+            $this->updatePassword($user, $request->password, $request->old_password);
+        }
+
         if ($request->has('mobile_phone')) {
             $user->mobile_phone = $request->mobile_phone;
         }
@@ -159,4 +167,33 @@ class UserController extends Controller
             'access_token' => $newToken,
         ]);
     }
+
+    public function updatePassword(Request $request)
+    {
+        $user = auth()->user(); // Get the authenticated user
+
+        $validator = Validator::make($request->all(), [
+            'old_password' => 'required|string|min:8',
+            'password' => 'required|string|min:8',
+            'password_confirmation' => 'required|same:password',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        // Verify that the old password matches before updating
+        if (!Hash::check($request->old_password, $user->password)) {
+            return response()->json(['message' => 'Old password is incorrect'], 400);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password updated successfully',
+        ]);
+    }
+
+
 }
