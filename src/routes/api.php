@@ -12,6 +12,7 @@ use App\Http\Controllers\QuizItemController;
 use App\Http\Controllers\QuizOrderController;
 use App\Http\Controllers\LivePracticeController;
 use App\Http\Controllers\LivePracticeOrderController;
+use App\Http\Controllers\GoodController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
@@ -48,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('profile', [UserController::class, 'update']);
     Route::put('profile/password', [UserController::class, 'updatePassword']);
     Route::post('logout', [UserController::class, 'logout']);
+
     Route::middleware('admin')->prefix('admin')->group(function () {
         Route::prefix('categories')->group(function () {
             Route::get('', [CategoriesController::class, 'getAll']);
@@ -103,9 +105,21 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('{course}/{live}', [LivePracticeController::class, 'edit']);
             Route::delete('{course}/{live}', [LivePracticeController::class, 'destroy']);
         });
+
+        Route::prefix('goods')->group(function () {
+            Route::post('', [GoodController::class, 'store']);
+            Route::put('{good}', [GoodController::class, 'update']);
+            Route::delete('{good}', [GoodController::class, 'destroy']);
+        });
     });
 
     Route::prefix('user')->group(function () {
+        Route::prefix('goods')->group(function () {
+            Route::get('', [GoodController::class, 'getAll']);
+            Route::get('/id/{good}', [GoodController::class, 'getOneBasedId']);
+            Route::get('/{good}', [GoodController::class, 'getOneBasedSlug']);
+        });
+
         Route::prefix('categories')->group(function () {
             Route::get('', [CategoriesController::class, 'getAll']);
             Route::get('{category}', [CategoriesController::class, 'getDetailCategory']);
