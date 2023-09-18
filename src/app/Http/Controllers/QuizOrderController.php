@@ -117,6 +117,12 @@ class QuizOrderController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         };
         $data_slug = Quiz::where('slug', $quiz)->first();
+        if (!$data_slug) {
+            return response()->json([
+                'message' => 'Quiz Not Found'
+            ], 400);
+        }
+
         $data_order = QuizOrder::where('user_id', $checkauth->id)
             ->where('quiz_id', $data_slug->id)
             ->first();
@@ -124,7 +130,7 @@ class QuizOrderController extends Controller
 
         // ubah data text jadi array
         $jawaban = json_decode($id_item);
-        $jawaban[$number- 1] = $request->answers;
+        $jawaban[$number - 1] = $request->answers;
 
         $data_order->update([
             'answers' => $jawaban
