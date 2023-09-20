@@ -30,6 +30,11 @@ class Course extends Model
         return $this->belongsTo(Categories::class, 'id');
     }
 
+    public function partner(): BelongsTo
+    {
+        return $this->belongsTo(Partner::class, 'partners_id');
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'ratings', 'courses_id', 'users_id')

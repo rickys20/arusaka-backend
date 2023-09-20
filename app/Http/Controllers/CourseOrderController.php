@@ -122,7 +122,11 @@ class CourseOrderController extends Controller
 
                 $all_material_order = Material::select('name', 'slug')->get();
 
+                // get partner name of course based on course id and partner id
+                $partner_name = Course::where('id', $data_slug->id)->with('partner')->first();
+
                 return response()->json([
+                    'partner' => $partner_name->partner->name,
                     'message' => 'Success',
                     'data' => $materialOrders,
                     'material' => $all_material_order
