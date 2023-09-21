@@ -37,6 +37,11 @@ Route::get('test', function () {
     ], 200);
 });
 Route::get('', [CourseController::class, 'getActiveCourses']);
+Route::get('{course}', [CourseController::class, 'getDetailCourse']);
+Route::prefix('partners')->group(function () {
+    Route::get('', [PartnerController::class, 'getAll']);
+    Route::get('{partner}', [PartnerController::class, 'getDetailPartner']);
+});
 Route::post('webhook', [CourseOrderController::class, 'webhook']);
 
 Route::prefix('auth')->group(function () {
