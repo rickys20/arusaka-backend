@@ -38,6 +38,7 @@ Route::get('test', function () {
 });
 Route::get('', [CourseController::class, 'getActiveCourses']);
 Route::post('webhook', [CourseOrderController::class, 'webhook']);
+Route::get('partners', [PartnerController::class, 'getAll']);
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [UserController::class, 'register']);
@@ -60,7 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
 
         Route::prefix('partners')->group(function () {
-            Route::get('', [PartnerController::class, 'getAll']);
+            // Route::get('', [PartnerController::class, 'getAll']);
             Route::post('', [PartnerController::class, 'store']);
             Route::get('{partner}', [PartnerController::class, 'getDetailPartner']);
             Route::put('{partner}', [PartnerController::class, 'editPartner']);
@@ -125,9 +126,9 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('{category}', [CategoriesController::class, 'getDetailCategory']);
         });
 
-        Route::prefix('partners')->group(function () {
-            Route::get('', [PartnerController::class, 'getAll']);
-        });
+        // Route::prefix('partners')->group(function () {
+        //     Route::get('', [PartnerController::class, 'getAll']);
+        // });
 
         Route::prefix('courses')->group(function () {
             Route::get('', [CourseController::class, 'getActiveCoursesUser']);
