@@ -51,7 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('profile/password', [UserController::class, 'updatePassword']);
     Route::post('logout', [UserController::class, 'logout']);
 
-    // Route::middleware('admin')->prefix('admin')->group(function () {
+    Route::prefix('admin')->group(function () {
         Route::prefix('categories')->group(function () {
             Route::get('', [CategoriesController::class, 'getAll']);
             Route::post('', [CategoriesController::class, 'store']);
@@ -112,7 +112,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::put('{good}', [GoodController::class, 'update']);
             Route::delete('{good}', [GoodController::class, 'destroy']);
         });
-    // });
+    });
 
     Route::prefix('user')->group(function () {
         Route::prefix('goods')->group(function () {
