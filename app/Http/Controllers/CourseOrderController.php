@@ -234,11 +234,12 @@ class CourseOrderController extends Controller
     {
         $data = CourseOrder::where('id', $course_order)->first();
         if ($data) {
-            $data_payment = Payment::where('id', $data->payments_id);
+            $payment_id = $data->payments_id;
+            $data->delete();
+            $data_payment = Payment::where('id',  $payment_id );
             if ($data_payment) {
                 $data_payment->delete();
             }
-            $data->delete();
             return response()->json([
                 'message' => 'Delete Success'
             ], 200);
