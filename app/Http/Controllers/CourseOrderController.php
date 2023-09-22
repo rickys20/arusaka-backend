@@ -122,7 +122,10 @@ class CourseOrderController extends Controller
 
                 $all_material_order = Material::select('name', 'slug')->get();
 
+                $partner_name = Course::where('id', $data_slug->id)->with('partner')->first();
+
                 return response()->json([
+                    'partner' => $partner_name->partner->name,
                     'message' => 'Success',
                     'data' => $materialOrders,
                     'material' => $all_material_order
@@ -162,7 +165,10 @@ class CourseOrderController extends Controller
 
                 $all_material_order = Material::select('name', 'slug')->get();
 
+                $partner_name = Course::where('id', $data_slug->id)->with('partner')->first();
+
                 return response()->json([
+                    'partner' => $partner_name->partner->name,
                     'message' => 'Success',
                     'data' => $materialOrders,
                     'material' => $all_material_order
