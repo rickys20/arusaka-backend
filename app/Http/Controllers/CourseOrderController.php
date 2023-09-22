@@ -74,7 +74,7 @@ class CourseOrderController extends Controller
             'customer_details' => $customerDetails,
         ]);
 
-        $redirectUrl = 'https://app.sandbox.midtrans.com/snap/v3/redirection/' . $transactionToken;
+        $redirectUrl = 'https://app.midtrans.com/snap/v3/redirection/' . $transactionToken;
         if ($redirectUrl) {
             $payment = new Payment();
             $payment->order_id = $orderId;
