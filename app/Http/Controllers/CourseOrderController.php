@@ -45,7 +45,7 @@ class CourseOrderController extends Controller
 
         // Initialize Midtrans configuration with your MIDTRANS_SERVER_KEY
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        Config::$isProduction = false; // Set to false for sandbox environment, true for production
+        Config::$isProduction = true; // Set to false for sandbox environment, true for production
 
         $orderId = 'ORDER-' . uniqid();
 
