@@ -122,8 +122,11 @@ class CourseOrderController extends Controller
 
                 $all_material_order = Material::select('name', 'slug')->get();
 
+                $partner_name = Course::where('id', $data_slug->id)->with('partner')->first();
+
                 return response()->json([
                     'message' => 'Success',
+                    'partner' => $partner_name->partner->name,
                     'data' => $materialOrders,
                     'material' => $all_material_order
                 ], 200);
@@ -149,8 +152,8 @@ class CourseOrderController extends Controller
                             'status' => $status,
                         ]);
 
-                        // Set the flag to false after processing the first material
-                        $firstMaterial = false;
+                        // Set the flag to true after processing the first material
+                        $firstMaterial = true;
                     }
                 }
 
@@ -162,8 +165,11 @@ class CourseOrderController extends Controller
 
                 $all_material_order = Material::select('name', 'slug')->get();
 
+                $partner_name = Course::where('id', $data_slug->id)->with('partner')->first();
+
                 return response()->json([
                     'message' => 'Success',
+                    'partner' => $partner_name->partner->name,
                     'data' => $materialOrders,
                     'material' => $all_material_order
                 ], 200);
