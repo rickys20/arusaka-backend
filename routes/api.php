@@ -45,6 +45,8 @@ Route::prefix('auth')->group(function () {
     Route::post('login', [UserController::class, 'login']);
 });
 
+Route::get('email/verify/{id}/{hash}', [UserController::class, 'verifyEmail'])->name('verification.verify');
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('profile', [UserController::class, 'profile']);
     Route::put('profile', [UserController::class, 'update']);

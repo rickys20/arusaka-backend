@@ -36,7 +36,7 @@ class PartnersTableSeeder extends Seeder
                 'email' => 'cs@karabels.com',
                 'contact' => '+62852-3844-8854',
                 'address' => 'SMAN 15 Surabaya',
-                'image_profile' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1691316510/ihyersi3sje2grii3gdo.jpg',
+                'image_profile' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1695474641/Karabels_logo_fojz4o.jpg',
             ),
             2 =>
             array (
@@ -45,7 +45,7 @@ class PartnersTableSeeder extends Seeder
                 'email' => 'cs@lamahyangan.com',
                 'contact' => '+62812-3195-8067',
                 'address' => 'Jatimulyo, Surabaya',
-                'image_profile' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1691316510/ihyersi3sje2grii3gdo.jpg',
+                'image_profile' => 'https://res.cloudinary.com/dz2arrelg/image/upload/v1695474641/Lamahyangan-crop_xaycbi.png',
             ),
         ));
 

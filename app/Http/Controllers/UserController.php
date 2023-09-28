@@ -45,16 +45,34 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password_confirmation);
+        $user->password = Hash::make($request->password);
         $user->save();
 
-        $token = $user->createToken('authToken', ['*'], Carbon::now()->addHour(10));
+        // Send email verification notification
+        $user->sendEmailVerificationNotification();
 
         return response()->json([
-            'message' => 'User registered successfully',
-            'access_token' => $token,
+            'message' => 'User registered successfully. Please check your email for verification instructions.',
         ], 201);
     }
+
+    public function verifyEmail($id, $hash)
+    {
+        $user = User::find($id);
+
+        if (!$user || !hash_equals($hash, sha1($user->getEmailForVerification()))) {
+            return response()->json(['message' => 'Invalid verification link'], 400);
+        }
+
+        if ($user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email address is already verified'], 400);
+        }
+
+        $user->markEmailAsVerified();
+
+        return response()->json(['message' => 'Email address has been verified'], 200);
+    }
+
 
     public function login(Request $request)
     {
