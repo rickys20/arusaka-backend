@@ -13,6 +13,7 @@ use App\Http\Controllers\QuizOrderController;
 use App\Http\Controllers\LivePracticeController;
 use App\Http\Controllers\LivePracticeOrderController;
 use App\Http\Controllers\GoodController;
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\JsonResponse;
@@ -39,6 +40,9 @@ Route::get('test', function () {
 Route::get('', [CourseController::class, 'getActiveCourses']);
 Route::post('webhook', [CourseOrderController::class, 'webhook']);
 Route::get('partners', [PartnerController::class, 'getAll']);
+Route::post('forgot-password', [ResetPasswordController::class, 'forgotPassword']);
+Route::post('password-check',  [ResetPasswordController::class, 'codecheck']);
+Route::post('password-reset', [ResetPasswordController::class, 'valid']);
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [UserController::class, 'register']);
